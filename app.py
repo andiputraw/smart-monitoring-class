@@ -24,7 +24,7 @@ class App:
             mic_result_1 = Mic1.calculate()
             mic_result_2 = Mic2.calculate()
 
-            if current_update - latest_update > 5:
+            if current_update - latest_update > 0.2:
                 latest_update = time.time()
                 print("MIC 1 : ", mic_result_1)
                 print("MIC 2 : ", mic_result_2)
