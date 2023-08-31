@@ -26,8 +26,8 @@ class App:
 
             if current_update - latest_update > 0.2:
                 latest_update = time.time()
-                print("MIC 1 : ", mic_result_1)
-                print("MIC 2 : ", mic_result_2)
+                print(f"MIC PIN {SOUND_PIN_1} : ", mic_result_1)
+                print(f"MIC PIN {SOUND_PIN_2} : ", mic_result_2)
 
 
 App()
