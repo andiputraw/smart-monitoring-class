@@ -34,7 +34,6 @@ class mic:
                 self.sound -= 1
 
             if self.counter <= 0:
-                print("RESETTED")
                 self.counter = 0
                 self.sound = 0
 
