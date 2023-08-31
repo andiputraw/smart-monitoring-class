@@ -17,12 +17,17 @@ class App:
         Mic1 = mic(SOUND_PIN_1)
         Mic2 = mic(SOUND_PIN_2)
 
+        latest_update = time.time()
+
         while True:
+            current_update = time.time()
             mic_result_1 = Mic1.calculate()
             mic_result_2 = Mic2.calculate()
 
-            print("MIC 1 : ", mic_result_1)
-            print("MIC 2 : ", mic_result_2)
+            if current_update - latest_update > 5:
+                latest_update = time.time()
+                print("MIC 1 : ", mic_result_1)
+                print("MIC 2 : ", mic_result_2)
 
 
 App()
