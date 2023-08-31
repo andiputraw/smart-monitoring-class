@@ -1,36 +1,28 @@
-from sensors.ultrasonic import Ultrasonic
+
 from core.ubidots import Ubidots as Ubi
 from sensors.mic import mic
 from dotenv import load_dotenv
 import time
 import os
 
-SOUND_PIN = 27
-ULTRA_TRIGGER = 4
-ULTRA_ECHO = 17
+SOUND_PIN_1 = 27
+SOUND_PIN_2 = 17
 DEVICE_LABEL = "burberry"
 
 load_dotenv()
 
+
 class App:
     def __init__(self) -> None:
-        Ultra = Ultrasonic(ULTRA_TRIGGER, ULTRA_ECHO)
-        Mic = mic(SOUND_PIN)
-        Ubidots = Ubi(DEVICE_LABEL)
+        Mic1 = mic(SOUND_PIN_1)
+        Mic2 = mic(SOUND_PIN_2)
 
         while True:
-            current_time = time.time()
+            mic_result_1 = Mic1.calculate()
+            mic_result_2 = Mic2.calculate()
 
-            ultra_result = Ultra.calculate()
-            mic_result = Mic.calculate()
-            
-            Ubidots.request(
-                {
-                "ultrasonic": ultra_result,
-                "mic": mic_result
-                }
-                ,current_time)
-            
+            print("MIC 1 : ", mic_result_1)
+            print("MIC 2 : ", mic_result_2)
 
 
 App()
