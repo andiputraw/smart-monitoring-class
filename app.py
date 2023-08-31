@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 import time
 import os
 
-SOUND_PIN_1 = 27
-SOUND_PIN_2 = 17
+SOUND_PIN_1 = 17
+SOUND_PIN_2 = 27
 DEVICE_LABEL = "burberry"
 
 load_dotenv()
