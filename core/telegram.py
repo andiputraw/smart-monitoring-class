@@ -22,20 +22,18 @@ class Telegram:
         self.last_request_time = 0
 
     def send_notification(self, message: str, current_time: time):
-
         if current_time - self.last_request_time > EACH_REQUEST_DELAY:
             self.last_request_time = current_time
-            return
-
-        chats = self.db.get_chat()
-        for chat in chats:
-            self.bot.sendMessage(chat_id=chat["chat_id"], text=message)
+            print("[INFO]: Sending message to all registered user ")
+            chats = self.db.get_chat()
+            for chat in chats:
+                self.bot.sendMessage(chat_id=chat["chat_id"], text=message)
 
     def start(self):
         print("[INFO]: Bot is starting")
 
         def _handle(message):
-            print("[INFO]: Sending message to all registered user ")
+
             msg = message['text']
             id = message['from']['id']
 
