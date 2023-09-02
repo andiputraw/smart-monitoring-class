@@ -1,23 +1,51 @@
 from datetime import datetime
-from telegram import Bot, Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-
-from database import DB
+from telepot import Bot
+from telepot.loop import MessageLoop
+from core.Database import DB
 import os
+import time
+
+EACH_REQUEST_DELAY = 40
 
 
 class Telegram:
 
-    bot : Bot
+    bot: Bot
     db: DB
-    token : str
+    token: str
+    last_request_time: time
 
-    def __init__(self, db: DB) -> None:
-        self.token = os.getenv("BOT_TOKEN")
+    def __init__(self, db: DB, token) -> None:
+        self.token = token
         self.bot = Bot(self.token)
         self.db = DB()
-    
-    def send_notification(self, message: str) :
+        self.last_request_time = 0
+
+    def send_notification(self, message: str, current_time: time):
+
+        if current_time - self.last_request_time > EACH_REQUEST_DELAY:
+            self.last_request_time = current_time
+            return
+
         chats = self.db.get_chat()
         for chat in chats:
-            self.bot.send_message(chat_id=chat["chat_id"], text=message)
+            self.bot.sendMessage(chat_id=chat["chat_id"], text=message)
+
+    def start(self):
+        print("INFO: Bot is starting")
+
+        def _handle(msg):
+            msg['text']
+            id = msg['from']['id']
+
+            match msg['text']:
+                case '/ping':
+                    self.bot.sendMessage(chat_id=id, text="Pong")
+                case '/daftar':
+                    self.db.insert_chat(id)
+                    self.bot.sendMessage(chat_id=id, text="Success")
+                case other:
+                    self.bot.sendMessage(
+                        chat_id=id, text="Error: Command is not supported")
+
+        MessageLoop(self.bot, _handle).run_as_thread()
