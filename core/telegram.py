@@ -32,9 +32,10 @@ class Telegram:
             self.bot.sendMessage(chat_id=chat["chat_id"], text=message)
 
     def start(self):
-        print("INFO: Bot is starting")
+        print("[INFO]: Bot is starting")
 
         def _handle(message):
+            print("[INFO]: Sending message to all registered user ")
             msg = message['text']
             id = message['from']['id']
 
