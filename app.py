@@ -46,7 +46,7 @@ class App:
                 db.insert_logs(mic_result_1, SOUND_PIN_1,
                                mic_result_2, SOUND_PIN_2)
                 TelegramBot.send_notification(
-                    INFORMATION_BROADCAST(mic_result_1, mic_result_2))
+                    INFORMATION_BROADCAST(mic_result_1, mic_result_2), current_time)
             ubi.request(
                 {"MIC 1": mic_result_1, "MIC 2": mic_result_2}, current_time)
 
