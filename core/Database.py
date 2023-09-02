@@ -1,4 +1,5 @@
 import sqlite3
+import time
 from typing import List, TypedDict
 from datetime import datetime, timedelta
 
@@ -15,8 +16,12 @@ class Log(TypedDict):
     timestamps: str
 
 
+LOG_DELAY = 30
+
+
 class DB:
     _conn: sqlite3.Connection
+    lastest_update: time.time()
 
     def __init__(self) -> None:
         self._conn = sqlite3.connect(
@@ -54,14 +59,16 @@ class DB:
         except:
             raise Exception("ERROR: Failed to get chat")
 
-    def insert_log(self, mic_status: str, mic_pin: str):
-        try:
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            self._conn.execute(
-                "INSERT INTO log (mic_status, mic_pin, timestamps) VALUES (?,?, ?)", (mic_status, mic_pin, current_time))
-            self._conn.commit()
-        except:
-            raise Exception("ERROR: failed to insert log")
+    def insert_log(self, mic_status: str, mic_pin: str, current_time: float):
+
+        if current_time - self.lastest_update > LOG_DELAY:
+            try:
+                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                self._conn.execute(
+                    "INSERT INTO log (mic_status, mic_pin, timestamps) VALUES (?,?, ?)", (mic_status, mic_pin, current_time))
+                self._conn.commit()
+            except:
+                raise Exception("ERROR: failed to insert log")
 
     def insert_logs(self, mic_status: str, mic_pin: str, mic_status2: str, mic_pin2: str):
         try:
