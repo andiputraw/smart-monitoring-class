@@ -34,18 +34,17 @@ class Telegram:
     def start(self):
         print("INFO: Bot is starting")
 
-        def _handle(msg):
-            msg['text']
-            id = msg['from']['id']
+        def _handle(message):
+            msg = message['text']
+            id = message['from']['id']
 
-            match msg['text']:
-                case '/ping':
-                    self.bot.sendMessage(chat_id=id, text="Pong")
-                case '/daftar':
-                    self.db.insert_chat(id)
-                    self.bot.sendMessage(chat_id=id, text="Success")
-                case other:
-                    self.bot.sendMessage(
-                        chat_id=id, text="Error: Command is not supported")
+            if msg == '/ping':
+                self.bot.sendMessage(chat_id=id, text="Pong")
+            elif msg == '/daftar':
+                self.db.insert_chat(id)
+                self.bot.sendMessage(chat_id=id, text="Success")
+            else:
+                self.bot.sendMessage(
+                    chat_id=id, text="Error: Command is not supported")
 
         MessageLoop(self.bot, _handle).run_as_thread()
