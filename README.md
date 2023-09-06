@@ -20,7 +20,8 @@ Note: Skala projek ini dalah miniatur prototype. tidak cocok untuk environtment 
 
    1. `UBIDOTS_TOKEN` bisa di dapat di https://help.ubidots.com/en/articles/590078-find-your-token-from-your-ubidots-account
    2. Sedangkan untuk `BOT_TOKEN` bisa di dapat dari https://core.telegram.org/bots/tutorial
-   3. CAMERA_URL bi
+   3. `CAMERA_URL` bisa didapatkan dari hostingan ipwebcam
+   4. `UBIDOTS_URL` adalah url untuk ke dashboard Ubidots
 
 4. install dependency
    ```bash
