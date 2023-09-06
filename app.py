@@ -16,6 +16,7 @@ load_dotenv()
 TOKEN = os.getenv('BOT_TOKEN')
 UBIDOTS = os.getenv('UBIDOTS_TOKEN')
 CAMERA_URL = os.getenv("CAMERA_URL")
+UBIDOTS_URL = os.getenv("UBIDOTS_URL")
 
 
 def INFORMATION_BROADCAST(mic_1, mic_2):
@@ -24,7 +25,9 @@ def INFORMATION_BROADCAST(mic_1, mic_2):
     Mic 1 : {mic_1}
     Mic 2 : {mic_2}
 
+    Dashboard Ubidots : {UBIDOTS_URL}
     Cek keadaan sekarang : {CAMERA_URL}
+    
     """
 
 
